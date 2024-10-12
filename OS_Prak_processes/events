@@ -1,0 +1,19 @@
+from threading import Thread, Event
+from time import sleep, time
+event = Event()
+
+def worker_function(name):   
+   event.wait()   
+   print(f"Worker: {name}")
+
+# Clear event
+event.clear()
+# Create and start workers
+workers = []
+for i in range(10):
+    worker = Thread(target=worker_function, args=(f"Поток {i}",))
+    workers.append(worker)
+    worker.start()
+
+print("Main thread")
+event.set()
